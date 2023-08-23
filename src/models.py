@@ -21,23 +21,32 @@ class Comment(Base):
     __tablename__ = 'comment'
     id = Column(Integer, primary_key=True)
     comment_text = Column(String(600), nullable=False)
-    post_id = (Integer) 
+    post_id = Column(Integer, ForeignKey('post.id')) 
     author_id = Column(Integer, ForeignKey('user.id'))
-
-class Media(Base):
-    __tablename__ = 'media'
-    id = Column(Integer, primary_key=True)
-    type = Column(enumerate)
-    post_id = (Integer) 
-    author_id = Column(Integer, ForeignKey('user.id'))
+   
 
 class Post(Base):
     __tablename__ = 'post'
     id = Column(Integer, primary_key=True)
     post_id = (Integer) 
     user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
 
+class Media(Base):
+    __tablename__ = 'media'
+    id = Column(Integer, primary_key=True)
+    tipo = Column(String(30))
+    url= Column(String(200))
+    post_id = Column(Integer, ForeignKey('post.id'))
+    post = relationship(Post) 
+
+
+class Follower(Base):
+    __tablename__ = 'follower'
+    id = Column(Integer, primary_key=True)
+    user_from_id = Column(Integer, ForeignKey('user.id'))
+    user_to_id = Column( Integer, ForeignKey('user.id'))
 
 
 # class Address(Base):
